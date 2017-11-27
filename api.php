@@ -40,11 +40,30 @@ if($_GET['option'] == "listprogrammes")
 	$err = curl_error($ch);
 	curl_close($ch);  # close curl
 
-	# use regex to to parse html and get the new redirected url
+	# use regex to to parse html 
 	$patern = '#<UL>([\w\W]*?)</UL>#';
 	preg_match_all($patern, $result, $parsed); 
 
-	print_r($parsed[0][0]);
+	$paternli = '#<A([\w\W]*?)<\/A>#';
+	preg_match_all($paternli, $parsed[0][0], $parsed); 
+
+	$progarray = array();
+
+	for($i=0;$i<count($parsed[0]);$i++)
+	{
+		// check if not contain programmes code, skip
+		if (strpos($parsed[0][$i], '<A NAME="') !== false) 
+		{
+		    //do nothing
+		}
+		else
+		{
+			$progarray[$i] = strip_tags($parsed[0][$i]);
+		}
+	}
+
+	// return list in JSON
+	echo json_encode($progarray);
 }
 
 
