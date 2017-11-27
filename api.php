@@ -1,5 +1,24 @@
 <?php 
 
+function fetchPage($url)
+{
+	$ch = curl_init(); # initialize curl object
+	curl_setopt($ch, CURLOPT_URL, $url); # set url
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
+	$result = curl_exec($ch); # execute curl, fetch webpage content
+	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
+	$err = curl_error($ch);
+	curl_close($ch);  # close curl
+
+	$pageData = array();
+	$pageData['result'] = $result;
+	$pageData['httpstatus'] = $httpstatus;
+	$pageData['error'] = $err;
+
+	return $pageData;
+}
+
 function getNewUrl()
 {
 	$baseurl = "http://istudent.uitm.edu.my/nsp/examttable";
