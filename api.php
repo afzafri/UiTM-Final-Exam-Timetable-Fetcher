@@ -70,6 +70,49 @@ if($_GET['option'] == "listprogrammes")
 	echo json_encode($progarray);
 }
 
+if($_GET['option'] == "listcourses")
+{
+	$newbaseurl = getNewUrl();
+
+	// fetch list of Courses
+	$ch = curl_init(); # initialize curl object
+	curl_setopt($ch, CURLOPT_URL, $newbaseurl."/list.html"); # set url
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
+	$result = curl_exec($ch); # execute curl, fetch webpage content
+	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
+	$err = curl_error($ch);
+	curl_close($ch);  # close curl
+
+	# use regex to to parse html 
+	$patern = '#<UL>([\w\W]*?)</UL>#';
+	preg_match_all($patern, $result, $parsed); 
+
+	$paternli = '#<A([\w\W]*?)<\/A>#';
+	preg_match_all($paternli, $parsed[0][1], $parsed); 
+
+	$coursearray = array();
+
+	for($i=0;$i<count($parsed[0]);$i++)
+	{
+		// check if not contain courses code, skip
+		if (strpos($parsed[0][$i], '<A NAME="') !== false) 
+		{
+		    //do nothing
+		}
+		else
+		{
+			$paternhref = '#"([\w\W]*?)"#';
+			preg_match_all($paternhref, $parsed[0][$i], $linkparsed); 
+
+			$coursearray[$i] = strip_tags($parsed[0][$i]);
+		}
+	}
+
+	// return list in JSON
+	echo json_encode($coursearray);
+}
+
 if($_GET['option'] == "timetable")
 {
 	$newbaseurl = getNewUrl();
