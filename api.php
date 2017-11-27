@@ -25,18 +25,11 @@ function getNewUrl()
 	$dir = "/JWP_CURRENT_B/index.html";
 	   
 	// need to fetch the new redirected url first, this is because the url will change each semester
-	$ch = curl_init(); # initialize curl object
-	curl_setopt($ch, CURLOPT_URL, $baseurl.$dir); # set url
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
-	$result = curl_exec($ch); # execute curl, fetch webpage content
-	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
-	$err = curl_error($ch);
-	curl_close($ch);  # close curl
+	$pageData = fetchPage($baseurl.$dir);
 
 	# use regex to to parse html and get the new redirected url
 	$patern = '#window.location="..([\w\W]*?)";#';
-	preg_match_all($patern, $result, $parsed); 
+	preg_match_all($patern, $pageData['result'], $parsed); 
 	$newdir = implode(str_replace(['window.location="..','";','index.html'], "", $parsed[0]),"");
 
 	// new url
@@ -50,18 +43,11 @@ if($_GET['option'] == "listprogrammes")
 	$newbaseurl = getNewUrl();
 
 	// fetch list of Programmes
-	$ch = curl_init(); # initialize curl object
-	curl_setopt($ch, CURLOPT_URL, $newbaseurl."/list.html"); # set url
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
-	$result = curl_exec($ch); # execute curl, fetch webpage content
-	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
-	$err = curl_error($ch);
-	curl_close($ch);  # close curl
+	$pageData = fetchPage($newbaseurl."/list.html");
 
 	# use regex to to parse html 
 	$patern = '#<UL>([\w\W]*?)</UL>#';
-	preg_match_all($patern, $result, $parsed); 
+	preg_match_all($patern, $pageData['result'], $parsed); 
 
 	$paternli = '#<A([\w\W]*?)<\/A>#';
 	preg_match_all($paternli, $parsed[0][0], $parsed); 
@@ -94,18 +80,11 @@ if($_GET['option'] == "listcourses")
 	$newbaseurl = getNewUrl();
 
 	// fetch list of Courses
-	$ch = curl_init(); # initialize curl object
-	curl_setopt($ch, CURLOPT_URL, $newbaseurl."/list.html"); # set url
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
-	$result = curl_exec($ch); # execute curl, fetch webpage content
-	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
-	$err = curl_error($ch);
-	curl_close($ch);  # close curl
+	$pageData = fetchPage($newbaseurl."/list.html");
 
 	# use regex to to parse html 
 	$patern = '#<UL>([\w\W]*?)</UL>#';
-	preg_match_all($patern, $result, $parsed); 
+	preg_match_all($patern, $pageData['result'], $parsed); 
 
 	$paternli = '#<A([\w\W]*?)<\/A>#';
 	preg_match_all($paternli, $parsed[0][1], $parsed); 
@@ -140,18 +119,11 @@ if($_GET['option'] == "timetable")
 	$progurl = $_GET['progcode'];
 
 	// fetch the timetable
-	$ch = curl_init(); # initialize curl object
-	curl_setopt($ch, CURLOPT_URL, $newbaseurl."/".$progurl); # set url
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
-	$result = curl_exec($ch); # execute curl, fetch webpage content
-	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
-	$err = curl_error($ch);
-	curl_close($ch);  # close curl
+	$pageData = fetchPage($newbaseurl."/".$progurl);
 
 	# use regex to to parse html, get the table 
 	$patern = '#<TABLE([\w\W]*?)<\/TABLE>#';
-	preg_match_all($patern, $result, $parsed); 
+	preg_match_all($patern, $pageData['result'], $parsed); 
 
 	print_r($parsed[0]);
 }
