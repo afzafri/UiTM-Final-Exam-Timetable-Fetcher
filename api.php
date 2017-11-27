@@ -40,7 +40,11 @@ if($_GET['option'] == "listprogrammes")
 	$err = curl_error($ch);
 	curl_close($ch);  # close curl
 
-	print_r($result);
+	# use regex to to parse html and get the new redirected url
+	$patern = '#<UL>([\w\W]*?)</UL>#';
+	preg_match_all($patern, $result, $parsed); 
+
+	print_r($parsed[0][0]);
 }
 
 
