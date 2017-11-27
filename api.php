@@ -70,6 +70,26 @@ if($_GET['option'] == "listprogrammes")
 	echo json_encode($progarray);
 }
 
+if($_GET['option'] == "timetable")
+{
+	$newbaseurl = getNewUrl();
+
+	// the programmes code url
+	$progurl = $_GET['progcode'];
+
+	// fetch the timetable
+	$ch = curl_init(); # initialize curl object
+	curl_setopt($ch, CURLOPT_URL, $newbaseurl."/".$progurl); # set url
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
+	$result = curl_exec($ch); # execute curl, fetch webpage content
+	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
+	$err = curl_error($ch);
+	curl_close($ch);  # close curl
+
+	print_r($result);
+}
+
 
 
 ?>
