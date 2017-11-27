@@ -58,7 +58,11 @@ if($_GET['option'] == "listprogrammes")
 		}
 		else
 		{
-			$progarray[$i] = strip_tags($parsed[0][$i]);
+			$paternhref = '#"([\w\W]*?)"#';
+			preg_match_all($paternhref, $parsed[0][$i], $linkparsed); 
+
+			$progarray[$i]['code'] = strip_tags($parsed[0][$i]);
+			$progarray[$i]['url'] = str_replace('"', '', $linkparsed[0][0]);
 		}
 	}
 
