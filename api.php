@@ -133,29 +133,35 @@ if($_GET['option'] == "timetable")
 	$patern = '#<TABLE([\w\W]*?)<\/TABLE>#';
 	preg_match_all($patern, $pageData['result'], $parsed); 
 
-	$trpatern = "#<TR>([\w\W]*?)</TR>#";
-    preg_match_all($trpatern, $parsed[0][0], $trparsed); 
+	for($x=0;$x<count($parsed[0]);$x++)
+	{
+		echo "<h3>Table".($x+1)."</h3>";
 
-    for($i=1;$i<count($trparsed[0]);$i++)
-    {
-        $tdpatern = "#<TD([\w\W]*?)</TD>#";
-        preg_match_all($tdpatern, $trparsed[0][$i], $tdparsed);
+		$trpatern = "#<TR>([\w\W]*?)</TR>#";
+	    preg_match_all($trpatern, $parsed[0][$x], $trparsed); 
 
-		for($j=0;$j<count($tdparsed[0]);$j++)
-		{
-			// check if not contain any exam, skip
-			if (strpos($tdparsed[0][$j], '&nbsp;') !== false) 
+	    for($i=1;$i<count($trparsed[0]);$i++)
+	    {
+	        $tdpatern = "#<TD([\w\W]*?)</TD>#";
+	        preg_match_all($tdpatern, $trparsed[0][$i], $tdparsed);
+
+			for($j=0;$j<count($tdparsed[0]);$j++)
 			{
-			    //do nothing
+				// check if not contain any exam, skip
+				if (strpos($tdparsed[0][$j], '&nbsp;') !== false) 
+				{
+				    //do nothing
+				}
+				else
+				{
+					print_r($tdparsed[0][$j]);
+					echo "<br>";
+				}
+				
 			}
-			else
-			{
-				print_r($tdparsed[0][$j]);
-				echo "<br>";
-			}
-			
 		}
 	}
+	
 }
 
 
