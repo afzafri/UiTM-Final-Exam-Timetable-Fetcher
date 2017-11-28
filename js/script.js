@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+	// disable input before data finish loading
+	$('#progcode').prop('disabled', true);
+	$('.coursecode').prop('disabled', true);
+	$('#fetch').prop('disabled', true);
+
 	// initialize Select2
 	$(function(){
 		$('#progcode,.coursecode').select2();
@@ -29,6 +34,7 @@ $(document).ready(function(){
 	    .done(function() {
 			// done
 			toastr.success('Programmes list fetched.')
+			$('#progcode').prop('disabled', false);
 		})
 		.fail(function() {
 			// failed
@@ -49,6 +55,8 @@ $(document).ready(function(){
 	    .done(function() {
 			// done
 			toastr.success('Courses list fetched.')
+			$('.coursecode').prop('disabled', false);
+			$('#fetch').prop('disabled', false);
 		})
 		.fail(function() {
 			// failed
@@ -59,7 +67,12 @@ $(document).ready(function(){
 
 	// fetch timetable
 	$('#fetch').click(function(){
+
 		var param = $('#inputForm').serialize();
+
+		$('#progcode').prop('disabled', true);
+		$('.coursecode').prop('disabled', true);
+		$('#fetch').prop('disabled', true);
 
 		// get timetable
 		$.getJSON("./api.php?option=timetable&"+param, function(data){
@@ -77,10 +90,16 @@ $(document).ready(function(){
 	    .done(function() {
 			// done
 			toastr.success('Timetable fetched.')
+			$('#progcode').prop('disabled', false);
+			$('.coursecode').prop('disabled', false);
+			$('#fetch').prop('disabled', false);
 		})
 		.fail(function() {
 			// failed
 			toastr.error('Error fetching timetable.')
+			$('#progcode').prop('disabled', false);
+			$('.coursecode').prop('disabled', false);
+			$('#fetch').prop('disabled', false);
 		});
 	});
 
