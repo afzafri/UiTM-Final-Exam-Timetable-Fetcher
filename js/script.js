@@ -67,6 +67,8 @@ $(document).ready(function(){
 
 	// fetch timetable
 	$('#fetch').click(function(){
+		// clear old data
+		$('#timetable').empty();
 
 		var param = $('#inputForm').serialize();
 
@@ -85,7 +87,7 @@ $(document).ready(function(){
 
 	        	results += subject+details+"<br><br>";
 	        }
-	        $('#timetable').append("<h3>Timetable:</h3>"+results);
+	        $('#timetable').append("<h3>Timetable:</h3>"+results).hide().fadeIn('slow');
 	    })
 	    .done(function() {
 			// done
