@@ -50,8 +50,10 @@ $(document).ready(function(){
 		// get timetable
 		$.getJSON("./api.php?option=timetable&progcode="+progcode+"&coursecode="+coursecode, function(data){
 	        // append data
-	        console.log(data);
-	        //$('#timetable').append(data);
+	        var subject = "Subject: "+data.subject;
+	        var details = "<br>Week: "+data.details['week'] +"<br>Date: "+data.details['date'] +"<br>Time: "+data.details['time'];
+
+	        $('#timetable').append(subject+details);
 	        alert("success");
 	    })
 	    .done(function() {
