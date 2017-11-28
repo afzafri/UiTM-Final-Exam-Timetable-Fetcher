@@ -87,7 +87,7 @@ $(document).ready(function(){
 		// get timetable
 		$.getJSON("./api.php?option=timetable&"+param, function(data){
 
-			var tabletop = "<table class='table table-bordered table-hover table-responsive' id='resultTable'>"
+			var tabletop = "<table class='table table-bordered table-hover' id='resultTable'>"
 							+"<thead>"
 								+"<tr class='bg-info text-white'>"
 									+"<th>Subject</th>"
@@ -113,7 +113,7 @@ $(document).ready(function(){
 	        var tablebot = "</tbody>"
 	        				+"</table>";
 
-	        $('#timetable').append(tabletop+results+tablebot).hide().fadeIn('slow');
+	        $('#timetable').append('<div class="card w-50 mx-auto table-responsive">'+tabletop+results+tablebot+'</div>').hide().fadeIn('slow');
 	    })
 	    .done(function() {
 			// done
