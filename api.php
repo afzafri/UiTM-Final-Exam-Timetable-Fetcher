@@ -165,7 +165,12 @@ if($_GET['option'] == "timetable")
 	        			preg_match_all($apatern, $tdparsed[0][$j], $aparsed);
 
 	        			$examarray['subject'] = strip_tags($aparsed[0][3]);
-	        			$examarray['details'] = strip_tags($aparsed[0][2]);
+
+	        			// split the details string
+	        			$detailsarr = explode(", ",strip_tags($aparsed[0][2]));
+	        			$examarray['details']['week'] = str_replace("Wk ", "", $detailsarr[1]);
+	        			$examarray['details']['date'] = $detailsarr[2];
+	        			$examarray['details']['time'] = $detailsarr[0];
 					}
 				}
 				
