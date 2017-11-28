@@ -17,6 +17,9 @@ $(document).ready(function(){
 		$('.coursecode').select2(); // re-initialize 
     });
 
+    // show loading spinner
+	$('.se-pre-con').fadeIn('slow');
+
 	// populate select box
 	$(function(){	
 
@@ -33,12 +36,12 @@ $(document).ready(function(){
 	    })
 	    .done(function() {
 			// done
-			toastr.success('Programmes list fetched.')
+			toastr.success('Programmes list fetched.');
 			$('#progcode').prop('disabled', false);
 		})
 		.fail(function() {
 			// failed
-			toastr.error('Error fetching programmes list.')
+			toastr.error('Error fetching programmes list.');
 		});
 
 		// courses list
@@ -54,19 +57,24 @@ $(document).ready(function(){
 	    })
 	    .done(function() {
 			// done
-			toastr.success('Courses list fetched.')
+			toastr.success('Courses list fetched.');
 			$('.coursecode').prop('disabled', false);
 			$('#fetch').prop('disabled', false);
+			$('.se-pre-con').fadeOut('slow');
 		})
 		.fail(function() {
 			// failed
-			toastr.error('Error fetching courses list.')
+			toastr.error('Error fetching courses list.');
+			$('.se-pre-con').fadeOut('slow');
 		});
 
 	});	
 
 	// fetch timetable
 	$('#fetch').click(function(){
+		// show loading
+		$('.se-pre-con').fadeIn('slow');
+
 		// clear old data
 		$('#timetable').empty();
 
@@ -91,17 +99,19 @@ $(document).ready(function(){
 	    })
 	    .done(function() {
 			// done
-			toastr.success('Timetable fetched.')
+			toastr.success('Timetable fetched.');
 			$('#progcode').prop('disabled', false);
 			$('.coursecode').prop('disabled', false);
 			$('#fetch').prop('disabled', false);
+			$('.se-pre-con').fadeOut('slow');
 		})
 		.fail(function() {
 			// failed
-			toastr.error('Error fetching timetable.')
+			toastr.error('Error fetching timetable.');
 			$('#progcode').prop('disabled', false);
 			$('.coursecode').prop('disabled', false);
 			$('#fetch').prop('disabled', false);
+			$('.se-pre-con').fadeOut('slow');
 		});
 	});
 
