@@ -1,24 +1,26 @@
 <?php 
 
+// Function for performing cURL request
 function fetchPage($url)
 {
-	$ch = curl_init(); # initialize curl object
-	curl_setopt($ch, CURLOPT_URL, $url); # set url
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); # receive server response
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); # disable SSL verification (THIS IS NOT PROPER/SAFE)
-	$result = curl_exec($ch); # execute curl, fetch webpage content
-	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); # receive http response status
+	$ch = curl_init(); // initialize curl object
+	curl_setopt($ch, CURLOPT_URL, $url); // set url
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // receive server response
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // disable SSL verification (THIS IS NOT PROPER/SAFE)
+	$result = curl_exec($ch); // execute curl, fetch webpage content
+	$httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); // receive http response status
 	$err = curl_error($ch);
-	curl_close($ch);  # close curl
+	curl_close($ch);  // close curl
 
 	$pageData = array();
 	$pageData['result'] = $result;
 	$pageData['httpstatus'] = $httpstatus;
 	$pageData['error'] = $err;
 
-	return $pageData;
+	return $pageData; // return array
 }
 
+// Function for fetching new URL
 function getNewUrl()
 {
 	$baseurl = "http://istudent.uitm.edu.my/nsp/examttable";
@@ -27,7 +29,7 @@ function getNewUrl()
 	// need to fetch the new redirected url first, this is because the url will change each semester
 	$pageData = fetchPage($baseurl.$dir);
 
-	# use regex to to parse html and get the new redirected url
+	// use regex to to parse html and get the new redirected url
 	$patern = '#window.location="..([\w\W]*?)";#';
 	preg_match_all($patern, $pageData['result'], $parsed); 
 	$newdir = implode(str_replace(['window.location="..','";','index.html'], "", $parsed[0]),"");
@@ -47,7 +49,7 @@ if($_GET['option'] == "listprogrammes")
 	// fetch list of Programmes
 	$pageData = fetchPage($newbaseurl."/list.html");
 
-	# use regex to to parse html 
+	// use regex to to parse html 
 	$patern = '#<UL>([\w\W]*?)</UL>#';
 	preg_match_all($patern, $pageData['result'], $parsed); 
 
@@ -86,7 +88,7 @@ if($_GET['option'] == "listcourses")
 	// fetch list of Courses
 	$pageData = fetchPage($newbaseurl."/list.html");
 
-	# use regex to to parse html 
+	// use regex to to parse html 
 	$patern = '#<UL>([\w\W]*?)</UL>#';
 	preg_match_all($patern, $pageData['result'], $parsed); 
 
@@ -127,7 +129,7 @@ if($_GET['option'] == "timetable")
 	// fetch the timetable
 	$pageData = fetchPage($newbaseurl."/".$progurl);
 
-	# use regex to to parse html, get the table 
+	// use regex to to parse html, get the table 
 	$patern = '#<TABLE([\w\W]*?)<\/TABLE>#';
 	preg_match_all($patern, $pageData['result'], $parsed); 
 
