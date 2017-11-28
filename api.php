@@ -146,7 +146,7 @@ if($_GET['option'] == "listcourses")
 }
 
 // --- Fetch Timetable ---
-// usage: api.php?option=timetable&progcode=PROGRAMMESCODE&coursecode=COURSECODE
+// usage: api.php?option=timetable&progcode=PROGRAMMESCODE&coursecode[]=COURSECODE&coursecode[]=COURSECODE...
 if($_GET['option'] == "timetable")
 {
 	$newbaseurl = getNewUrl();
