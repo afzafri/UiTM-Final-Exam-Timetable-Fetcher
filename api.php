@@ -118,13 +118,16 @@ if($_GET['option'] == "listcourses")
 }
 
 // --- Fetch Timetable ---
-// usage: api.php?option=timetable&progcode=PROGRAMMESCODE
+// usage: api.php?option=timetable&progcode=PROGRAMMESCODE&coursecode=COURSECODE
 if($_GET['option'] == "timetable")
 {
 	$newbaseurl = getNewUrl();
 
 	// the programmes code url
 	$progurl = $_GET['progcode'];
+
+	// the course code
+	$coursecode = $_GET['coursecode'];
 
 	// fetch the timetable
 	$pageData = fetchPage($newbaseurl."/".$progurl);
@@ -154,8 +157,14 @@ if($_GET['option'] == "timetable")
 				}
 				else
 				{
-					print_r($tdparsed[0][$j]);
-					echo "<br>";
+					// check if contain the course code, fetch
+					if (strpos($tdparsed[0][$j], $coursecode) !== false) 
+					{
+						$apatern = "#<A([\w\W]*?)</A>#";
+	        			preg_match_all($apatern, $tdparsed[0][$j], $aparsed);
+
+					    print_r($aparsed[0]);
+					}
 				}
 				
 			}
