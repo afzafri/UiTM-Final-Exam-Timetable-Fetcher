@@ -86,16 +86,34 @@ $(document).ready(function(){
 
 		// get timetable
 		$.getJSON("./api.php?option=timetable&"+param, function(data){
+
+			var tabletop = "<table class='table table-bordered table-hover table-responsive' id='resultTable'>"
+							+"<thead>"
+								+"<tr class='bg-info text-white'>"
+									+"<th>Subject</th>"
+									+"<th>Week</th>"
+									+"<th>Date</th>"
+									+"<th>Time</th>"
+								+"</tr>"
+							+"</thead>"
+							+"<tbody>";
+
 	        // append data
 	        var results = "";
 	        for(var i=0;i<data.length;i++)
 	        {
-	        	var subject = "Subject: "+data[i]['subject'];
-	        	var details = "<br>Week: "+data[i]['details']['week'] +"<br>Date: "+data[i]['details']['date'] +"<br>Time: "+data[i]['details']['time'];
-
-	        	results += subject+details+"<br><br>";
+	        	results +=  "<tr>"
+				        		+"<td>"+data[i]['subject']+"</td>"
+				        		+"<td>"+data[i]['details']['week']+"</td>"
+				        		+"<td>"+data[i]['details']['date']+"</td>"
+				        		+"<td>"+data[i]['details']['time']+"</td>"
+				        	+"</tr>";
 	        }
-	        $('#timetable').append("<h3>Timetable:</h3>"+results).hide().fadeIn('slow');
+
+	        var tablebot = "</tbody>"
+	        				+"</table>";
+
+	        $('#timetable').append(tabletop+results+tablebot).hide().fadeIn('slow');
 	    })
 	    .done(function() {
 			// done
