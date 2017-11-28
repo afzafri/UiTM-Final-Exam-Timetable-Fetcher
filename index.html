@@ -12,19 +12,21 @@
 	<body>
 		<div class="container">
 
-		    Programmes: 
-		    <select id="progcode" name="progcode">
-		    	<option value="">Choose Programme</option>
-		    </select>
-		    <br><br>
+			<form method="get" id="inputForm">
+			    Programmes:<br> 
+			    <select id="progcode" name="progcode">
+			    	<option value="">Choose Programme</option>
+			    </select>
+			    <br><br>
 
-		    Courses:<br>
-		    <select class="coursecode" name="coursecode">
-		    	<option value="">Choose Course</option>
-		    </select>
-		    <br>
+			    Courses:<br>
+			    <select class="coursecode" name="coursecode[]">
+			    	<option value="">Choose Course</option>
+			    </select>
+			    <br>
 
-		    <div id="cloneTarget"></div>
+			    <div id="cloneTarget"></div>
+		    </form>
 
 		    <br>
 

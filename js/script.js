@@ -57,9 +57,12 @@ $(document).ready(function(){
 
 	// fetch timetable
 	$('#fetch').click(function(){
-		var progcode = $('#progcode').val();
-		var coursecode = $('#coursecode').val();
-		// get timetable
+		//var progcode = $('#progcode').val();
+		//var coursecode = $('.coursecode').val();
+		var param = $('#inputForm').serialize();
+		console.log(param);
+
+		/*// get timetable
 		$.getJSON("./api.php?option=timetable&progcode="+progcode+"&coursecode="+coursecode, function(data){
 	        // append data
 	        var subject = "Subject: "+data.subject;
@@ -73,7 +76,7 @@ $(document).ready(function(){
 		})
 		.fail(function() {
 			// failed
-		});
+		});*/
 	});
 
 });
