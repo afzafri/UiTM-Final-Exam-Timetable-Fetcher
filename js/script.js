@@ -13,6 +13,7 @@ $(document).ready(function(){
 
 	        // append to select box
 	        $('#progcode').append(programmes);
+	        alert("success");
 	    })
 	    .done(function() {
 			// done
@@ -31,6 +32,7 @@ $(document).ready(function(){
 
 	        // append to select box
 	        $('#coursecode').append(courses);
+	        alert("success");
 	    })
 	    .done(function() {
 			// done
@@ -40,5 +42,24 @@ $(document).ready(function(){
 		});
 
 	});	
+
+	// fetch timetable
+	$('#fetch').click(function(){
+		var progcode = $('#progcode').val();
+		var coursecode = $('#coursecode').val();
+		// get timetable
+		$.getJSON("./api.php?option=timetable&progcode="+progcode+"&coursecode="+coursecode, function(data){
+	        // append data
+	        console.log(data);
+	        //$('#timetable').append(data);
+	        alert("success");
+	    })
+	    .done(function() {
+			// done
+		})
+		.fail(function() {
+			// failed
+		});
+	});
 
 });
