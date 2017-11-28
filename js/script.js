@@ -1,18 +1,18 @@
 $(document).ready(function(){
 
-	//initialize Select2
+	// initialize Select2
 	$(function(){
 		$('#progcode,.coursecode').select2();
 	});
 
 	$(document).on('change','.coursecode',function(){
-		$('.coursecode').select2("destroy");
-    	$(this).clone().appendTo('#cloneTarget').after('<br>');
+		$('.coursecode').select2("destroy"); // destroy Select2 first before clone
+    	$(this).clone().appendTo('#cloneTarget').after('<br>'); // clone
 		$('select:last').focus();
-		$('.coursecode').select2();
+		$('.coursecode').select2(); // re-initialize 
     });
 
-	//populate select box
+	// populate select box
 	$(function(){	
 
 		// programmes list
@@ -25,10 +25,10 @@ $(document).ready(function(){
 
 	        // append to select box
 	        $('#progcode').append(programmes);
-	        alert("success");
 	    })
 	    .done(function() {
 			// done
+			alert("success");
 		})
 		.fail(function() {
 			// failed
@@ -44,10 +44,10 @@ $(document).ready(function(){
 
 	        // append to select box
 	        $('.coursecode').append(courses);
-	        alert("success");
 	    })
 	    .done(function() {
 			// done
+			alert("success");
 		})
 		.fail(function() {
 			// failed
@@ -57,26 +57,28 @@ $(document).ready(function(){
 
 	// fetch timetable
 	$('#fetch').click(function(){
-		//var progcode = $('#progcode').val();
-		//var coursecode = $('.coursecode').val();
 		var param = $('#inputForm').serialize();
-		console.log(param);
 
-		/*// get timetable
-		$.getJSON("./api.php?option=timetable&progcode="+progcode+"&coursecode="+coursecode, function(data){
+		// get timetable
+		$.getJSON("./api.php?option=timetable&"+param, function(data){
 	        // append data
-	        var subject = "Subject: "+data.subject;
-	        var details = "<br>Week: "+data.details['week'] +"<br>Date: "+data.details['date'] +"<br>Time: "+data.details['time'];
+	        var results = "";
+	        for(var i=0;i<data.length;i++)
+	        {
+	        	var subject = "Subject: "+data[i]['subject'];
+	        	var details = "<br>Week: "+data[i]['details']['week'] +"<br>Date: "+data[i]['details']['date'] +"<br>Time: "+data[i]['details']['time'];
 
-	        $('#timetable').append(subject+details);
-	        alert("success");
+	        	results += subject+details+"<br><br>";
+	        }
+	        $('#timetable').append("<h3>Timetable:</h3>"+results);
 	    })
 	    .done(function() {
 			// done
+			alert("success");
 		})
 		.fail(function() {
 			// failed
-		});*/
+		});
 	});
 
 });

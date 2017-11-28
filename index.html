@@ -12,6 +12,18 @@
 	<body>
 		<div class="container">
 
+			<center>
+				<table>
+					<tr>
+						<td rowspan="2"><img src="./css/uitmlogo.png" width="80px"/></td>
+						<td><h4>UiTM Final Exam <br>Timetable Fetcher</h4></td>
+					</tr>
+					<tr>
+						<td><h5>Afif Zafri &copy; 2017</h5></td>
+					</tr>
+				</table>
+				<br>
+
 			<form method="get" id="inputForm">
 			    Programmes:<br> 
 			    <select id="progcode" name="progcode">
@@ -25,6 +37,7 @@
 			    </select>
 			    <br>
 
+			    <!-- append cloned select box here -->
 			    <div id="cloneTarget"></div>
 		    </form>
 
@@ -32,8 +45,10 @@
 
 		    <button id="fetch">Fetch Timetable</button><br><br>
 
-		    <h3>Timetable:</h3>
+		    <!-- append timetable here -->
 		    <div id="timetable"></div>
+
+		    </center>
 
 	    </div>
 
