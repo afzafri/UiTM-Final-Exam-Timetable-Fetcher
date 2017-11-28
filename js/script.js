@@ -1,5 +1,17 @@
 $(document).ready(function(){
 
+	//initialize Select2
+	$(function(){
+		$('#progcode,.coursecode').select2();
+	});
+
+	$(document).on('change','.coursecode',function(){
+		$('.coursecode').select2("destroy");
+    	$(this).clone().appendTo('#cloneTarget').after('<br>');
+		$('select:last').focus();
+		$('.coursecode').select2();
+    });
+
 	//populate select box
 	$(function(){	
 
@@ -31,7 +43,7 @@ $(document).ready(function(){
 	        });
 
 	        // append to select box
-	        $('#coursecode').append(courses);
+	        $('.coursecode').append(courses);
 	        alert("success");
 	    })
 	    .done(function() {
