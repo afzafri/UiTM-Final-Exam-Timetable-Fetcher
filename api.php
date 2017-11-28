@@ -38,6 +38,8 @@ function getNewUrl()
 	return $newbaseurl;
 }
 
+// --- List all Programmes ---
+// usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
 {
 	$newbaseurl = getNewUrl();
@@ -75,6 +77,8 @@ if($_GET['option'] == "listprogrammes")
 	echo json_encode($progarray);
 }
 
+// --- List all Courses ---
+// usage: api.php?option=listcourses
 if($_GET['option'] == "listcourses")
 {
 	$newbaseurl = getNewUrl();
@@ -111,6 +115,8 @@ if($_GET['option'] == "listcourses")
 	echo json_encode($coursearray);
 }
 
+// --- Fetch Timetable ---
+// usage: api.php?option=timetable&progcode=PROGRAMMESCODE
 if($_GET['option'] == "timetable")
 {
 	$newbaseurl = getNewUrl();
