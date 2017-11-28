@@ -138,6 +138,7 @@ if($_GET['option'] == "timetable")
 
 	// to store exam data
 	$examarray = array();
+	$counti = 0;
 
 	for($x=0;$x<count($parsed[0]);$x++)
 	{
@@ -159,18 +160,20 @@ if($_GET['option'] == "timetable")
 				else
 				{
 					// check if contain the course code, fetch
-					if (strpos($tdparsed[0][$j], $coursecode) !== false) 
+					if (strpos($tdparsed[0][$j], "CSC580") !== false || strpos($tdparsed[0][$j], "CSC570") !== false || strpos($tdparsed[0][$j], "CSC577") !== false || strpos($tdparsed[0][$j], "CSC569") !== false) 
 					{
 						$apatern = "#<A([\w\W]*?)</A>#";
 	        			preg_match_all($apatern, $tdparsed[0][$j], $aparsed);
 
-	        			$examarray['subject'] = strip_tags($aparsed[0][3]);
+	        			$examarray[$counti]['subject'] = strip_tags($aparsed[0][3]);
 
 	        			// split the details string
 	        			$detailsarr = explode(", ",strip_tags($aparsed[0][2]));
-	        			$examarray['details']['week'] = str_replace("Wk ", "", $detailsarr[1]);
-	        			$examarray['details']['date'] = $detailsarr[2];
-	        			$examarray['details']['time'] = $detailsarr[0];
+	        			$examarray[$counti]['details']['week'] = str_replace("Wk ", "", $detailsarr[1]);
+	        			$examarray[$counti]['details']['date'] = $detailsarr[2];
+	        			$examarray[$counti]['details']['time'] = $detailsarr[0];
+
+	        			$counti++;
 					}
 				}
 				
