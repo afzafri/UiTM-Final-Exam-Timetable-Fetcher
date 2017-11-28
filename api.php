@@ -48,18 +48,21 @@ function strpos_array($haystack, $needles)
     {
 	    foreach ($needles as $str) 
 	    {
-	        if ( is_array($str) ) 
-	        {
-	            $pos = strpos_array($haystack, $str);
-	        } 
-	        else 
-	        {
-	            $pos = strpos($haystack, $str);
-	        }
-	        if ($pos !== FALSE) 
-	        {
-	            return $pos;
-	        }
+	    	if($str != "")
+	    	{
+	    		if ( is_array($str) ) 
+		        {
+		            $pos = strpos_array($haystack, $str);
+		        } 
+		        else 
+		        {
+		            $pos = strpos($haystack, $str);
+		        }
+		        if ($pos !== FALSE) 
+		        {
+		            return $pos;
+		        }
+	    	}
 	    }
     } 
     else 
