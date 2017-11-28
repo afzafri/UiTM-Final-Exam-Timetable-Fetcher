@@ -40,6 +40,34 @@ function getNewUrl()
 	return $newbaseurl;
 }
 
+// strpos for array
+// thanks to: http://my1.php.net/manual/en/function.strpos.php#102773
+function strpos_array($haystack, $needles) 
+{
+    if ( is_array($needles) ) 
+    {
+	    foreach ($needles as $str) 
+	    {
+	        if ( is_array($str) ) 
+	        {
+	            $pos = strpos_array($haystack, $str);
+	        } 
+	        else 
+	        {
+	            $pos = strpos($haystack, $str);
+	        }
+	        if ($pos !== FALSE) 
+	        {
+	            return $pos;
+	        }
+	    }
+    } 
+    else 
+    {
+       return strpos($haystack, $needles);
+    }
+}
+
 // --- List all Programmes ---
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
@@ -127,7 +155,7 @@ if($_GET['option'] == "timetable")
 	$progurl = $_GET['progcode'];
 
 	// the course code
-	$coursecode = $_GET['coursecode'];
+	$coursecode[] = $_GET['coursecode'];
 
 	// fetch the timetable
 	$pageData = fetchPage($newbaseurl."/".$progurl);
@@ -159,8 +187,8 @@ if($_GET['option'] == "timetable")
 				}
 				else
 				{
-					// check if contain the course code, fetch
-					if (strpos($tdparsed[0][$j], "CSC580") !== false || strpos($tdparsed[0][$j], "CSC570") !== false || strpos($tdparsed[0][$j], "CSC577") !== false || strpos($tdparsed[0][$j], "CSC569") !== false) 
+					// check if contain the course code, using custom strpos function
+					if(strpos_array($tdparsed[0][$j], $coursecode))
 					{
 						$apatern = "#<A([\w\W]*?)</A>#";
 	        			preg_match_all($apatern, $tdparsed[0][$j], $aparsed);
