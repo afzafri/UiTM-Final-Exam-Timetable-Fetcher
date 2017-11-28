@@ -28,10 +28,11 @@ $(document).ready(function(){
 	    })
 	    .done(function() {
 			// done
-			alert("success");
+			toastr.success('Programmes list fetched.')
 		})
 		.fail(function() {
 			// failed
+			toastr.error('Error fetching programmes list.')
 		});
 
 		// courses list
@@ -47,10 +48,11 @@ $(document).ready(function(){
 	    })
 	    .done(function() {
 			// done
-			alert("success");
+			toastr.success('Courses list fetched.')
 		})
 		.fail(function() {
 			// failed
+			toastr.error('Error fetching courses list.')
 		});
 
 	});	
@@ -74,10 +76,11 @@ $(document).ready(function(){
 	    })
 	    .done(function() {
 			// done
-			alert("success");
+			toastr.success('Timetable fetched.')
 		})
 		.fail(function() {
 			// failed
+			toastr.error('Error fetching timetable.')
 		});
 	});
 
