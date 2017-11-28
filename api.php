@@ -133,7 +133,17 @@ if($_GET['option'] == "timetable")
 	$patern = '#<TABLE([\w\W]*?)<\/TABLE>#';
 	preg_match_all($patern, $pageData['result'], $parsed); 
 
-	print_r($parsed[0]);
+	$trpatern = "#<TR>([\w\W]*?)</TR>#";
+    preg_match_all($trpatern, $parsed[0][0], $trparsed); 
+
+    for($j=1;$j<count($trparsed[0]);$j++)
+    {
+        $tdpatern = "#<TD([\w\W]*?)</TD>#";
+        preg_match_all($tdpatern, $trparsed[0][$j], $tdparsed);
+		print_r($tdparsed[0]);
+		echo "<br>";
+		//echo $trparsed[0][$j];
+	}
 }
 
 
