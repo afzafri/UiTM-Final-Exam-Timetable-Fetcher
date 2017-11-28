@@ -33,15 +33,15 @@
 
 					<form method="get" id="inputForm">
 					<div class="form-group">
-						<label>Programmes</label>
-						<select class="form-control" id="progcode" name="progcode">
+						<label>Programmes</label><br>
+						<select class="form-control select2" id="progcode" name="progcode">
 					    	<option value="">Choose Programme</option>
 					    </select>
 					</div>
 
 					<div class="form-group">
-						<label>Courses</label>
-						<select class="coursecode form-control" name="coursecode[]">
+						<label>Courses</label><br>
+						<select class="coursecode form-control select2" name="coursecode[]">
 					    	<option value="">Choose Course</option>
 					    </select>
 					     <!-- append cloned select box here -->
@@ -54,6 +54,7 @@
 					<button id="fetch" class="btn btn-success">Fetch Timetable</button>
 				</footer>
 			</div>
+			<br><br>
 
 			<!-- append timetable here -->
 		    <div id="timetable"></div>
