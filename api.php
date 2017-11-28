@@ -136,13 +136,25 @@ if($_GET['option'] == "timetable")
 	$trpatern = "#<TR>([\w\W]*?)</TR>#";
     preg_match_all($trpatern, $parsed[0][0], $trparsed); 
 
-    for($j=1;$j<count($trparsed[0]);$j++)
+    for($i=1;$i<count($trparsed[0]);$i++)
     {
         $tdpatern = "#<TD([\w\W]*?)</TD>#";
-        preg_match_all($tdpatern, $trparsed[0][$j], $tdparsed);
-		print_r($tdparsed[0]);
-		echo "<br>";
-		//echo $trparsed[0][$j];
+        preg_match_all($tdpatern, $trparsed[0][$i], $tdparsed);
+
+		for($j=0;$j<count($tdparsed[0]);$j++)
+		{
+			// check if not contain any exam, skip
+			if (strpos($tdparsed[0][$j], '&nbsp;') !== false) 
+			{
+			    //do nothing
+			}
+			else
+			{
+				print_r($tdparsed[0][$j]);
+				echo "<br>";
+			}
+			
+		}
 	}
 }
 
