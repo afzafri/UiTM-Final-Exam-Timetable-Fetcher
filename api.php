@@ -136,10 +136,11 @@ if($_GET['option'] == "timetable")
 	$patern = '#<TABLE([\w\W]*?)<\/TABLE>#';
 	preg_match_all($patern, $pageData['result'], $parsed); 
 
+	// to store exam data
+	$examarray = array();
+
 	for($x=0;$x<count($parsed[0]);$x++)
 	{
-		echo "<h3>Table".($x+1)."</h3>";
-
 		$trpatern = "#<TR>([\w\W]*?)</TR>#";
 	    preg_match_all($trpatern, $parsed[0][$x], $trparsed); 
 
@@ -163,14 +164,17 @@ if($_GET['option'] == "timetable")
 						$apatern = "#<A([\w\W]*?)</A>#";
 	        			preg_match_all($apatern, $tdparsed[0][$j], $aparsed);
 
-					    print_r($aparsed[0]);
+	        			$examarray['subject'] = strip_tags($aparsed[0][3]);
+	        			$examarray['details'] = strip_tags($aparsed[0][2]);
 					}
 				}
 				
 			}
 		}
 	}
-	
+
+	// return JSON
+	echo json_encode($examarray);
 }
 
 
