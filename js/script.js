@@ -113,7 +113,7 @@ $(document).ready(function(){
 	        var tablebot = "</tbody>"
 	        				+"</table>";
 
-	        $('#timetable').append('<div class="card w-50 mx-auto table-responsive">'+tabletop+results+tablebot+'</div>').hide().fadeIn('slow');
+	        $('#timetable').append('<div class="card mx-auto table-responsive">'+tabletop+results+tablebot+'</div>').hide().fadeIn('slow');
 	    })
 	    .done(function() {
 			// done
