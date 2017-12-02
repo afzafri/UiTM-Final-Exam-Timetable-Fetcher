@@ -3,6 +3,8 @@ Fetch the final exam timetable. Simplify your work, since the timetable provided
 
 Official website for this project: https://www.uitmtimetable.com/finalexam
 
+Note: only Diploma and Bachelor timetable are supported at the moment. 
+
 ## Installation
 ```git clone https://github.com/afzafri/UiTM-Final-Exam-Timetable-Fetcher.git``` into your server.
 
