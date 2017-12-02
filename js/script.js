@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+	// show loading spinner
+	$('.se-pre-con').fadeIn('slow');
+
 	// disable input before data finish loading
 	$('#progcode').prop('disabled', true);
 	$('.coursecode').prop('disabled', true);
@@ -16,9 +19,6 @@ $(document).ready(function(){
 		$('select:last').focus();
 		$('.coursecode').select2(); // re-initialize 
     });
-
-    // show loading spinner
-	$('.se-pre-con').fadeIn('slow');
 
 	// populate select box
 	$(function(){	
