@@ -78,22 +78,23 @@ $cachetime = 86400; // time for cache to expire in seconds, I set 24h
 // Read cache file
 function readCache($filename)
 {
-	$cachefile = $cachedir.$filename.".dat";
+	$cachefile = $GLOBALS['cachedir'].$filename.".dat";
 
 	// Check if the cached file is still fresh
-	if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile))
+	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
 		return file_get_contents($filename);
+		exit();
 	}
 }
 
 // Write cache file
 function writeCache($filename,$cachedat)
 {
-	$cachefile = $cachedir.$filename.".dat";
+	$cachefile = $GLOBALS['cachedir'].$filename.".dat";
 
 	// Check if the cached file is still fresh
-	if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile))
+	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
 		file_put_contents($filename,$catchdat);
 	}
@@ -104,6 +105,9 @@ function writeCache($filename,$cachedat)
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
 {
+	// read cache, if exist, get the data
+	echo readCache("listprogrammes");
+
 	$newbaseurl = getNewUrl();
 
 	// fetch list of Programmes
