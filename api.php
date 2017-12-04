@@ -121,7 +121,7 @@ function writeCache($filename,$cachedat)
 if($_GET['option'] == "listprogrammes")
 {
 	// read cache, if exist, get the data and display
-	readCache("listprogrammes");
+	readCache("listprogrammes","");
 
 	$newbaseurl = getNewUrl();
 
@@ -167,7 +167,7 @@ if($_GET['option'] == "listprogrammes")
 if($_GET['option'] == "listcourses")
 {
 	// read cache, if exist, get the data and display
-	readCache("listcourses");
+	readCache("listcourses","");
 
 	$newbaseurl = getNewUrl();
 
@@ -211,24 +211,34 @@ if($_GET['option'] == "listcourses")
 // usage: api.php?option=timetable&progcode=PROGRAMMESCODE&coursecode[]=COURSECODE&coursecode[]=COURSECODE...
 if($_GET['option'] == "timetable")
 {
+	$pageData = null;
+
 	// the programmes code url
 	$progurl = $_GET['progcode'];
 
 	// the course code
 	$coursecode[] = $_GET['coursecode'];
 
-	/*// read cache, if exist, get the data and display
+	// read cache, if exist, get the data and display
 	$timetablefile = str_replace(['resource/','.html'], "", $progurl);
-	readCache($timetablefile);*/
+	$pageData = readCache($timetablefile,"timetable");
 
-	$newbaseurl = getNewUrl();
+	if($pageData == null)
+	{
+		$newbaseurl = getNewUrl();
 
-	// fetch the timetable
-	$pageData = fetchPage($newbaseurl."/".$progurl);
+		// fetch the timetable
+		$pageDataNew = fetchPage($newbaseurl."/".$progurl);
+
+		// check if cache not available, write a cache file
+		writeCache($timetablefile,$pageDataNew);
+
+		$pageData = $pageDataNew['result'];
+	}
 
 	// use regex to to parse html, get the table 
 	$patern = '#<TABLE([\w\W]*?)<\/TABLE>#';
-	preg_match_all($patern, $pageData['result'], $parsed); 
+	preg_match_all($patern, $pageData, $parsed); 
 
 	// to store exam data
 	$examarray = array();
