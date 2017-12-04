@@ -72,7 +72,7 @@ function strpos_array($haystack, $needles)
 }
 
 // Function for creating cache files, read and write
-$cachedir = "./cache/";
+$cachedir = "cache/";
 $cachetime = 86400; // time for cache to expire in seconds, I set 24h
 
 // Read cache file
@@ -83,7 +83,7 @@ function readCache($filename)
 	// Check if the cached file is still fresh
 	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
-		return file_get_contents($filename);
+		return file_get_contents($cachefile);
 		exit();
 	}
 }
@@ -96,7 +96,7 @@ function writeCache($filename,$cachedat)
 	// Check if the cached file is still fresh
 	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
-		file_put_contents($filename,$catchdat);
+		file_put_contents($cachefile,$catchdat);
 	}
 }
 
@@ -105,8 +105,6 @@ function writeCache($filename,$cachedat)
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
 {
-	// read cache, if exist, get the data
-	echo readCache("listprogrammes");
 
 	$newbaseurl = getNewUrl();
 
@@ -140,7 +138,8 @@ if($_GET['option'] == "listprogrammes")
 	}
 
 	// return list in JSON
-	echo json_encode($progarray);
+	$jsonprog = json_encode($progarray);
+	echo $jsonprog;
 }
 
 // --- List all Courses ---
