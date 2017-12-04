@@ -71,6 +71,35 @@ function strpos_array($haystack, $needles)
     }
 }
 
+// Function for creating cache files, read and write
+$cachedir = "./cache/";
+$cachetime = 86400; // time for cache to expire in seconds, I set 24h
+
+// Read cache file
+function readCache($filename)
+{
+	$cachefile = $cachedir.$filename.".dat";
+
+	// Check if the cached file is still fresh
+	if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile))
+	{
+		return file_get_contents($filename);
+	}
+}
+
+// Write cache file
+function writeCache($filename,$cachedat)
+{
+	$cachefile = $cachedir.$filename.".dat";
+
+	// Check if the cached file is still fresh
+	if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile))
+	{
+		file_put_contents($filename,$catchdat);
+	}
+}
+
+
 // --- List all Programmes ---
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
