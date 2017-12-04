@@ -159,6 +159,9 @@ if($_GET['option'] == "listprogrammes")
 // usage: api.php?option=listcourses
 if($_GET['option'] == "listcourses")
 {
+	// read cache, if exist, get the data and display
+	readCache("listcourses");
+	
 	$newbaseurl = getNewUrl();
 
 	// fetch list of Courses
@@ -190,7 +193,11 @@ if($_GET['option'] == "listcourses")
 	}
 
 	// return list in JSON
-	echo json_encode($coursearray);
+	$jsoncourse = json_encode($coursearray);
+	echo $jsoncourse;
+
+	// check if cache not available, write a cache file
+	writeCache("listcourses",$jsoncourse);
 }
 
 // --- Fetch Timetable ---
