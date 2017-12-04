@@ -92,7 +92,7 @@ function readCache($filename)
 	// Check if the cached file is still fresh
 	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
-		return file_get_contents($cachefile);
+		echo file_get_contents($cachefile);
 		exit();
 	}
 }
@@ -113,8 +113,8 @@ function writeCache($filename,$cachedat)
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
 {
-	// read cache, if exist, get the data
-	echo readCache("listprogrammes");
+	// read cache, if exist, get the data and display
+	readCache("listprogrammes");
 
 	$newbaseurl = getNewUrl();
 
