@@ -96,7 +96,7 @@ function writeCache($filename,$cachedat)
 	// Check if the cached file is still fresh
 	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
-		file_put_contents($cachefile,$catchdat);
+		file_put_contents($cachefile,$cachedat);
 	}
 }
 
@@ -105,6 +105,7 @@ function writeCache($filename,$cachedat)
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
 {
+	
 
 	$newbaseurl = getNewUrl();
 
@@ -140,6 +141,8 @@ if($_GET['option'] == "listprogrammes")
 	// return list in JSON
 	$jsonprog = json_encode($progarray);
 	echo $jsonprog;
+
+	
 }
 
 // --- List all Courses ---
