@@ -72,8 +72,17 @@ function strpos_array($haystack, $needles)
 }
 
 // Function for creating cache files, read and write
-$cachedir = "cache/";
+$cachedir = "./cache/";
 $cachetime = 86400; // time for cache to expire in seconds, I set 24h
+
+// Check if cache directory not exist, create one, and chmod
+function createCacheDir()
+{
+	if (!file_exists($GLOBALS['cachedir'])) 
+	{
+	    mkdir($GLOBALS['cachedir']), 0777, true);
+	}
+}
 
 // Read cache file
 function readCache($filename)
@@ -91,6 +100,8 @@ function readCache($filename)
 // Write cache file
 function writeCache($filename,$cachedat)
 {
+	createCacheDir(); // create dir if not exist
+
 	$cachefile = $GLOBALS['cachedir'].$filename.".dat";
 
 	// Check if the cached file is still fresh
@@ -104,8 +115,7 @@ function writeCache($filename,$cachedat)
 // --- List all Programmes ---
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
-{
-	
+
 
 	$newbaseurl = getNewUrl();
 
@@ -141,8 +151,6 @@ if($_GET['option'] == "listprogrammes")
 	// return list in JSON
 	$jsonprog = json_encode($progarray);
 	echo $jsonprog;
-
-	
 }
 
 // --- List all Courses ---
