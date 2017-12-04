@@ -113,6 +113,8 @@ function writeCache($filename,$cachedat)
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
 {
+	// read cache, if exist, get the data
+	echo readCache("listprogrammes");
 
 	$newbaseurl = getNewUrl();
 
@@ -149,6 +151,8 @@ if($_GET['option'] == "listprogrammes")
 	$jsonprog = json_encode($progarray);
 	echo $jsonprog;
 
+	// check if cache not available, write a cache file
+	writeCache("listprogrammes",$jsonprog);
 }
 
 // --- List all Courses ---
