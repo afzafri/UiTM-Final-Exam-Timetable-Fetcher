@@ -85,15 +85,22 @@ function createCacheDir()
 }
 
 // Read cache file
-function readCache($filename)
+function readCache($filename,$opt)
 {
 	$cachefile = $GLOBALS['cachedir'].$filename.".dat";
 
 	// Check if the cached file is still fresh
 	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
-		echo file_get_contents($cachefile);
-		exit();
+		if($opt != "timetable")
+		{
+			echo file_get_contents($cachefile);
+			exit();
+		}
+		else
+		{
+			return file_get_contents($cachefile);
+		}
 	}
 }
 
@@ -161,7 +168,7 @@ if($_GET['option'] == "listcourses")
 {
 	// read cache, if exist, get the data and display
 	readCache("listcourses");
-	
+
 	$newbaseurl = getNewUrl();
 
 	// fetch list of Courses
@@ -204,13 +211,17 @@ if($_GET['option'] == "listcourses")
 // usage: api.php?option=timetable&progcode=PROGRAMMESCODE&coursecode[]=COURSECODE&coursecode[]=COURSECODE...
 if($_GET['option'] == "timetable")
 {
-	$newbaseurl = getNewUrl();
-
 	// the programmes code url
 	$progurl = $_GET['progcode'];
 
 	// the course code
 	$coursecode[] = $_GET['coursecode'];
+
+	/*// read cache, if exist, get the data and display
+	$timetablefile = str_replace(['resource/','.html'], "", $progurl);
+	readCache($timetablefile);*/
+
+	$newbaseurl = getNewUrl();
 
 	// fetch the timetable
 	$pageData = fetchPage($newbaseurl."/".$progurl);
