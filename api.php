@@ -80,7 +80,7 @@ function createCacheDir()
 {
 	if (!file_exists($GLOBALS['cachedir'])) 
 	{
-	    mkdir($GLOBALS['cachedir']), 0777, true);
+	    mkdir($GLOBALS['cachedir'], 0777, true);
 	}
 }
 
@@ -104,18 +104,15 @@ function writeCache($filename,$cachedat)
 
 	$cachefile = $GLOBALS['cachedir'].$filename.".dat";
 
-	// Check if the cached file is still fresh
-	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
-	{
-		file_put_contents($cachefile,$cachedat);
-	}
+	// write to cache file
+	file_put_contents($cachefile,$cachedat);
 }
 
 
 // --- List all Programmes ---
 // usage: api.php?option=listprogrammes
 if($_GET['option'] == "listprogrammes")
-
+{
 
 	$newbaseurl = getNewUrl();
 
@@ -151,6 +148,7 @@ if($_GET['option'] == "listprogrammes")
 	// return list in JSON
 	$jsonprog = json_encode($progarray);
 	echo $jsonprog;
+
 }
 
 // --- List all Courses ---
