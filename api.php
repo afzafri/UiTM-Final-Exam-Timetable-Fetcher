@@ -225,7 +225,7 @@ if($_GET['option'] == "timetable")
 
 	// read cache, if exist, get the data and display
 	$timetablefile = str_replace(['resource/','.html'], "", $progurl);
-	$pageData = readCache($timetablefile,"timetable");
+	$pageData = html_entity_decode(readCache($timetablefile,"timetable")); // decode html 
 
 	if($pageData == null)
 	{
@@ -234,10 +234,10 @@ if($_GET['option'] == "timetable")
 		// fetch the timetable
 		$pageDataNew = fetchPage($newbaseurl."/".$progurl);
 
-		// check if cache not available, write a cache file
-		writeCache($timetablefile,$pageDataNew);
-
 		$pageData = $pageDataNew['result'];
+
+		// check if cache not available, write a cache file
+		writeCache($timetablefile,htmlentities($pageData)); // encode html, to avoid cache page execute html
 	}
 
 	// use regex to to parse html, get the table 
