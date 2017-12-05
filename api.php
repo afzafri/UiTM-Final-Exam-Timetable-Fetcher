@@ -102,6 +102,10 @@ function readCache($filename,$opt)
 			return file_get_contents($cachefile);
 		}
 	}
+	else
+	{
+		return null;
+	}
 }
 
 // Write cache file
