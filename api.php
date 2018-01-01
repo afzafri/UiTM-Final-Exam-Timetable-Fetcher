@@ -278,9 +278,9 @@ if($_GET['option'] == "timetable")
 	        			// split the details string
 	        			$detailsarr = explode(", ",strip_tags($aparsed[0][2]));
 	        			$examarray[$counti]['details']['week'] = str_replace("Wk ", "", $detailsarr[1]);
-	        			$examarray[$counti]['details']['date'] = $detailsarr[2];
+	        			$examarray[$counti]['details']['date'] = date('d/m/y',strtotime($detailsarr[2]));
 	        			$examarray[$counti]['details']['time'] = $detailsarr[0];
-
+	        			
 	        			$counti++;
 					}
 				}
