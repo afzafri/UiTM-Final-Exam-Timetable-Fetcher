@@ -92,14 +92,21 @@ function readCache($filename,$opt)
 	// Check if the cached file is still fresh
 	if (file_exists($cachefile) && time() - $GLOBALS['cachetime'] < filemtime($cachefile))
 	{
-		if($opt != "timetable")
+		if(!empty(file_get_contents($cachefile)))
 		{
-			echo file_get_contents($cachefile);
-			exit();
+			if($opt != "timetable")
+			{
+				echo file_get_contents($cachefile);
+				exit();
+			}
+			else
+			{
+				return file_get_contents($cachefile);
+			}
 		}
 		else
 		{
-			return file_get_contents($cachefile);
+			return null;
 		}
 	}
 	else
